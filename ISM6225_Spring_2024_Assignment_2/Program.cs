@@ -62,8 +62,29 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return new List<int>(); // Placeholder
+                List<int> result = new List<int>();
+                int n = nums.Length;
+
+                // Iterate through the array and mark the index of the corresponding number as negative
+                for (int i = 0; i < n; i++)
+                {
+                    int val = Math.Abs(nums[i]) - 1;
+                    if (nums[val] > 0)
+                    {
+                        nums[val] = -nums[val]; // Mark the number as seen
+                    }
+                }
+
+                // After marking, the positive numbers' indices correspond to missing numbers
+                for (int i = 0; i < n; i++)
+                {
+                    if (nums[i] > 0)
+                    {
+                        result.Add(i + 1); // Add the missing number
+                    }
+                }
+
+                return result;
             }
             catch (Exception)
             {
@@ -76,8 +97,34 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return new int[0]; // Placeholder
+                // Create a new array to store sorted results
+                int[] sortedArray = new int[nums.Length];
+                int index = 0;
+
+                // First, add all even numbers to the sorted array
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    // Check if the number is even
+                    if (nums[i] % 2 == 0)
+                    {
+                        // Place the even number in the current position of sortedArray
+                        sortedArray[index] = nums[i];
+                        index++;
+                    }
+                }
+
+                // Then, add all odd numbers to the sorted array
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    if (nums[i] % 2 != 0)
+                    {
+                        // Place the odd number in the next position of sortedArray
+                        sortedArray[index] = nums[i];
+                        index++;
+                    }
+                }
+
+                return sortedArray;
             }
             catch (Exception)
             {
@@ -91,7 +138,32 @@ namespace Assignment_2
             try
             {
                 // Write your code here
-                return new int[0]; // Placeholder
+                // Create a dictionary to store numbers and their corresponding indices
+                Dictionary<int, int> map = new Dictionary<int, int>();
+
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    // This is the value needed to reach the target when added to nums[i]
+                    int complement = target - nums[i];
+
+                    // Check if the complement exists in the dictionary
+                    // If it does, we have found the two numbers that sum to the target
+                    if (map.ContainsKey(complement))
+                    {
+                        // map[complement] gives us the index of the first number
+                        // i is the index of the second number (current number)
+                        return new int[] { map[complement], i }; // Return the indices of the two numbers
+                    }
+
+                    // Store the number and its index in the dictionary
+                    if (!map.ContainsKey(nums[i]))
+                    {
+                        // Only store the number if it is not already present to maintain the last occurrence
+                        map[nums[i]] = i;
+                    }
+                }
+
+                return new int[] { -1, -1 }; // If no solution is found
             }
             catch (Exception)
             {
@@ -105,7 +177,11 @@ namespace Assignment_2
             try
             {
                 // Write your code here
-                return 0; // Placeholder
+                Array.Sort(nums); // Sort the array
+                int n = nums.Length;
+
+                // Return the maximum product of three numbers
+                return Math.Max(nums[0] * nums[1] * nums[n - 1], nums[n - 1] * nums[n - 2] * nums[n - 3]);
             }
             catch (Exception)
             {
@@ -119,7 +195,7 @@ namespace Assignment_2
             try
             {
                 // Write your code here
-                return "101010"; // Placeholder
+                return Convert.ToString(decimalNumber, 2); // Convert decimal to binary
             }
             catch (Exception)
             {
@@ -132,8 +208,8 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return 0; // Placeholder
+                Array.Sort(nums);
+                return nums[0];
             }
             catch (Exception)
             {
@@ -147,7 +223,19 @@ namespace Assignment_2
             try
             {
                 // Write your code here
-                return false; // Placeholder
+                if (x < 0) return false; // Negative numbers are not palindromes
+
+                int rev = 0, ori = x;
+
+                // Reverse the number
+                while (x != 0)
+                {
+                    rev = rev * 10 + x % 10;
+                    x /= 10;
+                }
+
+                return ori == rev; // Check if original and reversed numbers are the same
+                
             }
             catch (Exception)
             {
@@ -161,7 +249,18 @@ namespace Assignment_2
             try
             {
                 // Write your code here
-                return 0; // Placeholder
+                if (n <= 1) return n;
+
+                int fib1 = 0, fib2 = 1;
+
+                for (int i = 2; i <= n; i++)
+                {
+                    int temp = fib1 + fib2;
+                    fib1 = fib2;
+                    fib2 = temp;
+                }
+
+                return fib2;
             }
             catch (Exception)
             {
