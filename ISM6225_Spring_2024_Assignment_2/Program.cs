@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Assignment_2
 {
@@ -62,6 +63,10 @@ namespace Assignment_2
         {
             try
             {
+                if(nums == null || nums.Length == 0)
+        return new List<int>(); // Handle null or empty array case
+
+
                 List<int> result = new List<int>();
                 int n = nums.Length;
 
@@ -97,6 +102,9 @@ namespace Assignment_2
         {
             try
             {
+                if (nums == null)
+                    return Array.Empty<int>(); // Handle null input case
+
                 // Create a new array to store sorted results
                 int[] sortedArray = new int[nums.Length];
                 int index = 0;
@@ -139,6 +147,8 @@ namespace Assignment_2
             {
                 // Write your code here
                 // Create a dictionary to store numbers and their corresponding indices
+                if (nums == null || nums.Length < 2)
+                    return new int[] { -1, -1 };
                 Dictionary<int, int> map = new Dictionary<int, int>();
 
                 for (int i = 0; i < nums.Length; i++)
@@ -177,6 +187,9 @@ namespace Assignment_2
             try
             {
                 // Write your code here
+                if (nums == null || nums.Length < 3)
+                    throw new ArgumentException("Array must contain at least three numbers."); // Handle insufficient length
+
                 Array.Sort(nums); // Sort the array
                 int n = nums.Length;
 
@@ -194,6 +207,8 @@ namespace Assignment_2
         {
             try
             {
+                if (decimalNumber < 0)
+                    throw new ArgumentOutOfRangeException("Negative numbers cannot be converted to binary."); // Handle negative numbers
                 // Write your code here
                 return Convert.ToString(decimalNumber, 2); // Convert decimal to binary
             }
@@ -224,13 +239,16 @@ namespace Assignment_2
             {
                 // Write your code here
                 if (x < 0) return false; // Negative numbers are not palindromes
-
+                if (x == 0) return true;
                 int rev = 0, ori = x;
 
                 // Reverse the number
                 while (x != 0)
                 {
-                    rev = rev * 10 + x % 10;
+                    int digit = x % 10;
+                    rev = rev * 10 + digit;
+                    if (rev < 0 || (rev - digit) / 10 != ori / 10)
+                        return false;
                     x /= 10;
                 }
 
@@ -249,6 +267,8 @@ namespace Assignment_2
             try
             {
                 // Write your code here
+                if (n < 0)
+                    throw new ArgumentOutOfRangeException("Fibonacci number cannot be computed for negative integers."); // Handle negative input
                 if (n <= 1) return n;
 
                 int fib1 = 0, fib2 = 1;
